@@ -1,0 +1,32 @@
+.add-register-wrapper {
+  margin-top: 60px;
+
+  .row {
+    .card {
+      margin: 0 auto;
+    }
+
+    .card-title {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .register-button {
+      text-align: center;
+    }
+
+    .col-sm-12:last-child {
+      text-align: right;
+      margin-top: 16px;
+
+      a {
+        color: green;
+        text-decoration: underline;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
