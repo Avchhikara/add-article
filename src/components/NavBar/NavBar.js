@@ -18,6 +18,9 @@ import {
 import AppContext from "./../AppProvider/AppContext";
 import { connect } from "./../../utils/renderWithContext";
 
+import FavIcon from "./../../../static/img/favicon.png";
+import FavIconText from "./../../../static/img/nav-text.png";
+
 import "./NavBar.css";
 
 class NavBar extends React.Component {
@@ -63,13 +66,13 @@ class NavBar extends React.Component {
         <Navbar color="light" light expand="md" fixed={"top"} id="header">
           <NavbarBrand href="/" className="nav-brand">
             <img
-              src="./../../static/img/favicon.png"
+              src={FavIcon}
               alt="Main Logo"
               className="nav-img"
               id="head-img-1"
             />{" "}
             <img
-              src="./../../static/img/nav-text.png"
+              src={FavIconText}
               alt="ECEhub.in"
               className="nav-img__side"
               id="head-img-2"

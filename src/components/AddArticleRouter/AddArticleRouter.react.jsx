@@ -6,6 +6,7 @@ import AddArticleHome from "./../AddArticleHome";
 import Login from "./../Login";
 import Register from "./../Register";
 import Dashboard from "./../Dashboard";
+import NavBar from "./../NavBar";
 
 class AddArticleRouter extends React.Component {
   constructor(props) {
@@ -22,7 +23,8 @@ class AddArticleRouter extends React.Component {
   render() {
     if (this.state.isMounted) {
       return (
-        <HashRouter baseURL="/add">
+        <HashRouter>
+          <Route path="/" component={NavBar} />
           <Switch>
             <Route path="/" exact component={AddArticleHome} />
             <Route path="/login" exact component={Login} />
