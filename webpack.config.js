@@ -1,11 +1,12 @@
 const path = require("path");
 const webpack = require("webpack");
 
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+// Know, which type of environment it is
+const isDevelopment = process.env.NODE_ENV === "development";
 
-const htmlPlugin = new HtmlWebpackPlugin({
-  filename: "./index.html"
-});
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: "./index.js",
@@ -13,29 +14,77 @@ module.exports = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist")
   },
-
+  resolve: {
+    extensions: [".js", ".jsx", ".scss", ".css"]
+  },
   module: {
     rules: [
       {
-        test: /\.(js | jsx)$/,
-        exclude: /(node_modules|bower_components)/,
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env"],
-            plugins: ["@babel/plugin-transform-runtime"]
-          }
+          loader: "babel-loader"
         }
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.(s(a|c)ss | css) $/,
+        loader: [
+          isDevelopment ? "style-loader" : MiniCssExtractPlugin.loader,
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              localIdentName: "[name]__[local]___[hash:base64:5]",
+              camelCase: true,
+              sourceMap: isDevelopment
+            }
+          },
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: isDevelopment
+            }
+          }
+        ]
+      },
+      {
+        test: /\.s(a|c)ss$/,
+        exclude: /\.module.(s(a|c)ss)$/,
+        loader: [
+          isDevelopment ? "style-loader" : MiniCssExtractPlugin.loader,
+          "css-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              sourceMap: isDevelopment
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {}
+          }
+        ]
       }
     ]
   },
   devtool: "source-map",
   plugins: [
-    htmlPlugin,
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    // Use NoErrorsPlugin for webpack 1.x
-    new webpack.NoEmitOnErrorsPlugin()
+    new HtmlWebpackPlugin({
+      template: "./index.html"
+    }),
+    new MiniCssExtractPlugin({
+      filename: isDevelopment ? "[name].css" : "[name].[hash].css",
+      chunkFilename: isDevelopment ? "[id].css" : "[id].[hash].css"
+    })
   ],
   devServer: {
     contentBase: path.join(__dirname, "dist"),
