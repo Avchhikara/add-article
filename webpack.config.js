@@ -11,7 +11,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: "./index.js",
   output: {
-    filename: "bundle.js",
+    filename: "app1.bundle.js",
+    chunkFilename: "app2.bundle.js",
     path: path.resolve(__dirname, "dist")
   },
   resolve: {
