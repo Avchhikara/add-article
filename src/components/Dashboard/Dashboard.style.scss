@@ -1,7 +1,17 @@
 .dashboard-wrapper {
-  margin-top: 60px !important;
+  margin-top: 100px !important;
+
+  .dashboard-content {
+    margin-top: 16px;
+    margin-bottom: 8px;
+  }
 
   .btn {
     margin-top: 8px;
+  }
+
+  .h1 {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
   }
 }

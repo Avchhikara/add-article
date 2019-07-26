@@ -59,7 +59,7 @@ class Register extends React.Component {
     // Do register thing here after passing values to the api and move the user to another link
     // Now, making a request with axios
     axios
-      .post(`${api}/register`, {
+      .post(`${api}/onboarding`, {
         type: "REGISTER",
         payload: {
           ...values

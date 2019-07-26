@@ -6,10 +6,6 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownItem,
-  DropdownMenu,
   Input,
   InputGroup,
   Button
@@ -30,13 +26,8 @@ class NavBar extends React.Component {
       isOpen: false,
       isLoggedIn: false
     };
-    this.navbar = React.createRef();
 
     this.toggleNavbar = this.toggleNavbar.bind(this);
-  }
-
-  componentWillReceiveProps(props) {
-    console.log(props);
   }
 
   toggleNavbar() {
@@ -62,7 +53,7 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <div>
+      <>
         <Navbar color="light" light expand="md" fixed={"top"} id="header">
           <NavbarBrand href="/" className="nav-brand">
             <img
@@ -81,49 +72,25 @@ class NavBar extends React.Component {
           <NavbarToggler onClick={this.openNav} id="nav-toggler" />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret className="subjects nav-elements">
-                  Subjects
-                </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>Digital circuits and systems</DropdownItem>
-                  <DropdownItem>Field and waves</DropdownItem>
-                  <DropdownItem>Analog Electronics Circuits</DropdownItem>
-                  <DropdownItem>Communication System</DropdownItem>
-                  <DropdownItem>Power Electronics</DropdownItem>
-                  <DropdownItem>CAO</DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>Reset</DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-              <NavItem className="nav-elements">
-                <InputGroup>
-                  <Input
-                    id="nav-input"
-                    className="search-input"
-                    placeholder="Search for Articles"
-                    // onChange={e => {
-                    //   this.props.history.push(`/search?q=${e.target.value}`);
-                    // }}
-                    // autoFocus={true}
-                  />
-                </InputGroup>
-              </NavItem>
               <NavItem className="nav-elements">
                 <Button
                   color="success"
                   id="nav-btn"
                   className="add-article__btn"
-                  onClick={() => (window.location.href = "/add")}
+                  onClick={() => {
+                    this.props.logout();
+                    this.props.history.push("/");
+                  }}
                 >
-                  Add Article
+                  Logout
                 </Button>
               </NavItem>
             </Nav>
           </Collapse>
         </Navbar>
+
         <div id="nav-bottom" />
-      </div>
+      </>
     );
   }
 }

@@ -52,7 +52,7 @@ class Login extends React.Component {
 
   onLoggingIn(values, loginUser, setSubmitting, resetForm) {
     axios
-      .post(`${api}/register`, {
+      .post(`${api}/onboarding`, {
         type: "LOGIN",
         payload: { ...values }
       })
@@ -92,125 +92,127 @@ class Login extends React.Component {
           return (
             <div className="add-login-wrapper container">
               <Row>
-                <Card>
-                  <CardBody>
-                    {this.state.response.message.length ? (
-                      <Alert
-                        color={
-                          this.state.response.status ? "success" : "danger"
-                        }
-                      >
-                        {this.state.response.message}
-                      </Alert>
-                    ) : (
-                      <noscript />
-                    )}
-                    <CardTitle>
-                      <h4 className="text-success">Login</h4>
-                    </CardTitle>
-                    <Formik
-                      initialValues={{ email: "", password: "" }}
-                      validate={values => {
-                        let errors = {};
-                        // conditions for the validation
+                <Col sm={8} md={6}>
+                  <Card>
+                    <CardBody>
+                      {this.state.response.message.length ? (
+                        <Alert
+                          color={
+                            this.state.response.status ? "success" : "danger"
+                          }
+                        >
+                          {this.state.response.message}
+                        </Alert>
+                      ) : (
+                        <noscript />
+                      )}
+                      <CardTitle>
+                        <h4 className="text-success">Login</h4>
+                      </CardTitle>
+                      <Formik
+                        initialValues={{ email: "", password: "" }}
+                        validate={values => {
+                          let errors = {};
+                          // conditions for the validation
 
-                        if (!values.email) {
-                          errors.email = "email is required";
-                        } else if (
-                          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
-                            values.email
-                          )
-                        ) {
-                          errors.email = "Email is invalid";
-                        }
+                          if (!values.email) {
+                            errors.email = "email is required";
+                          } else if (
+                            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(
+                              values.email
+                            )
+                          ) {
+                            errors.email = "Email is invalid";
+                          }
 
-                        if (!values.password) {
-                          errors.password = "password is required";
-                        }
+                          if (!values.password) {
+                            errors.password = "password is required";
+                          }
 
-                        return errors;
-                      }}
-                      onSubmit={(values, { setSubmitting, resetForm }) => {
-                        // What to do when the form is submitted
-                        // setSubmitting(false);
-                        //   console.log(actions);
-                        // Now, making an api request here
+                          return errors;
+                        }}
+                        onSubmit={(values, { setSubmitting, resetForm }) => {
+                          // What to do when the form is submitted
+                          // setSubmitting(false);
+                          //   console.log(actions);
+                          // Now, making an api request here
 
-                        this.onLoggingIn(
+                          this.onLoggingIn(
+                            values,
+                            loginUser,
+                            setSubmitting,
+                            resetForm
+                          );
+                        }}
+                        render={({
                           values,
-                          loginUser,
-                          setSubmitting,
-                          resetForm
-                        );
-                      }}
-                      render={({
-                        values,
-                        errors,
-                        touched,
-                        handleChange,
-                        handleBlur,
-                        handleSubmit,
-                        isSubmitting
-                      }) => {
-                        return (
-                          <Form onSubmit={handleSubmit}>
-                            <FormGroup row>
-                              <Label for="email" sm={4}>
-                                Email
-                              </Label>
-                              <Col sm={8}>
-                                <Input
-                                  type="email"
-                                  name="email"
-                                  id="email"
-                                  placeholder="email-id here"
-                                  invalid={!!errors.email}
-                                  tag={Field}
-                                />
-                                <div className="invalid-feedback">
-                                  {errors && touched.email && errors.email}
-                                </div>
+                          errors,
+                          touched,
+                          handleChange,
+                          handleBlur,
+                          handleSubmit,
+                          isSubmitting
+                        }) => {
+                          return (
+                            <Form onSubmit={handleSubmit}>
+                              <FormGroup row>
+                                <Label for="email" sm={4}>
+                                  Email
+                                </Label>
+                                <Col sm={8}>
+                                  <Input
+                                    type="email"
+                                    name="email"
+                                    id="email"
+                                    placeholder="email-id here"
+                                    invalid={!!errors.email}
+                                    tag={Field}
+                                  />
+                                  <div className="invalid-feedback">
+                                    {errors && touched.email && errors.email}
+                                  </div>
+                                </Col>
+                              </FormGroup>
+                              <FormGroup row>
+                                <Label for="password" sm={4}>
+                                  Password
+                                </Label>
+                                <Col sm={8}>
+                                  <Input
+                                    type="password"
+                                    name="password"
+                                    id="password"
+                                    tag={Field}
+                                    placeholder="password here"
+                                    invalid={errors && errors.password}
+                                  />
+                                  <div className="invalid-feedback">
+                                    {errors &&
+                                      touched.password &&
+                                      errors.password}
+                                  </div>
+                                </Col>
+                              </FormGroup>
+                              <Col sm={12} className="login-button">
+                                <Button color="success" onClick={handleSubmit}>
+                                  {isSubmitting ? (
+                                    <Spinner size="sm" color="light" />
+                                  ) : (
+                                    "Login"
+                                  )}
+                                </Button>
                               </Col>
-                            </FormGroup>
-                            <FormGroup row>
-                              <Label for="password" sm={4}>
-                                Password
-                              </Label>
-                              <Col sm={8}>
-                                <Input
-                                  type="password"
-                                  name="password"
-                                  id="password"
-                                  tag={Field}
-                                  placeholder="password here"
-                                  invalid={errors && errors.password}
-                                />
-                                <div className="invalid-feedback">
-                                  {errors &&
-                                    touched.password &&
-                                    errors.password}
-                                </div>
+                              <Col sm={12}>
+                                New User?{" "}
+                                <Link to="/register">Register here</Link>
                               </Col>
-                            </FormGroup>
-                            <Col sm={12} className="login-button">
-                              <Button color="success" onClick={handleSubmit}>
-                                {isSubmitting ? (
-                                  <Spinner size="sm" color="light" />
-                                ) : (
-                                  "Login"
-                                )}
-                              </Button>
-                            </Col>
-                            <Col sm={12}>
-                              New User?{" "}
-                              <Link to="/register">Register here</Link>
-                            </Col>
-                          </Form>
-                        );
-                      }}
-                    />
-                  </CardBody>
-                </Card>
+                            </Form>
+                          );
+                        }}
+                      />
+                    </CardBody>
+                  </Card>
+                </Col>
               </Row>
             </div>
           );

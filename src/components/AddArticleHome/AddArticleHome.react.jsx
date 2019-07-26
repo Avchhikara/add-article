@@ -18,7 +18,7 @@ class AddArticleHome extends React.Component {
   }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     if (this.state.isMounted) {
       return (
         <div className="add-article-home-wrapper">

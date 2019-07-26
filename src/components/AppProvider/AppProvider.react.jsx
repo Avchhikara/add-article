@@ -21,8 +21,35 @@ class AppProvider extends React.Component {
         });
         // console.log(this.state);
       },
-      article: "",
-      updateArticle: article => this.setState({ article })
+      article: {
+        data: "",
+        title: "",
+        tags: []
+      },
+      updateData: data =>
+        this.setState({
+          article: {
+            data,
+            title: this.state.article.title,
+            tags: this.state.article.tags
+          }
+        }),
+      updateTitle: title =>
+        this.setState({
+          article: {
+            data: this.state.article.data,
+            title,
+            tags: this.state.article.tags
+          }
+        }),
+      logout: () =>
+        this.setState({
+          user: {
+            email: "",
+            token: "",
+            name: ""
+          }
+        })
     };
   }
 

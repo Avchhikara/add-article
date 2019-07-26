@@ -20,15 +20,17 @@ class DEditor extends React.Component {
     this.setState({ editorState: value });
 
     // Updating the global state with if need
-    const { updateArticle } = this.props;
-    if (updateArticle) {
+    const { updateData } = this.props;
+    // console.log(updateData);
+    if (updateData) {
       setTimeout(() => {
         // Getting the html version of the state
         const rawContentState = convertToRaw(
           this.state.editorState.getCurrentContent()
         );
         const markup = draftToHtml(rawContentState);
-        updateArticle(markup);
+        // console.log("Markup -> ", markup);
+        updateData(markup);
       });
     }
   };
