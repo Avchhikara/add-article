@@ -1,6 +1,8 @@
 const path = require("path");
 const webpack = require("webpack");
 
+const TerserPlugin = require("terser-webpack-plugin");
+
 // Know, which type of environment it is
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -91,5 +93,8 @@ module.exports = {
     contentBase: path.join(__dirname, "dist"),
     compress: true,
     port: 8080
+  },
+  optimization: {
+    minimizer: [new TerserPlugin({})]
   }
 };
